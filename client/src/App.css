@@ -1,0 +1,552 @@
+/* ─── Reset & Variables ─────────────────────────────────── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --primary: #1b2838;
+  --primary-light: #2d4a6f;
+  --accent: #c4a265;
+  --accent-light: #e8d5a8;
+  --bg: #f4f0e8;
+  --bg-paper: #faf7f1;
+  --text: #2c2c2c;
+  --text-muted: #777;
+  --surface: #ffffff;
+  --border: #ddd3c4;
+  --shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  --radius: 8px;
+  --font-he: "Frank Ruhl Libre", "Noto Serif Hebrew", "David", serif;
+  --font-en: Georgia, "Times New Roman", serif;
+  --font-ui: system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
+body {
+  font-family: var(--font-ui);
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+/* ─── App Layout ────────────────────────────────────────── */
+.app {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* ─── Header ────────────────────────────────────────────── */
+.app-header {
+  text-align: center;
+  padding: 32px 0 16px;
+}
+
+.app-title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  font-weight: 700;
+}
+
+.title-he {
+  font-family: var(--font-he);
+  font-size: 2.4rem;
+  color: var(--primary);
+  letter-spacing: 2px;
+}
+
+.title-en {
+  font-family: var(--font-ui);
+  font-size: 1.5rem;
+  color: var(--primary-light);
+  font-weight: 400;
+}
+
+.app-subtitle {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  margin-top: 6px;
+}
+
+/* ─── Daf Selector (Toolbar) ────────────────────────────── */
+.daf-selector {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 20px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  margin-bottom: 20px;
+}
+
+.daf-selector label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--primary);
+}
+
+.daf-selector select,
+.daf-selector input[type="number"] {
+  padding: 7px 12px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  font-size: 0.95rem;
+  font-family: var(--font-ui);
+  background: var(--bg-paper);
+  color: var(--text);
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.daf-selector select:focus,
+.daf-selector input:focus {
+  border-color: var(--accent);
+}
+
+.daf-selector input[type="number"] {
+  width: 70px;
+}
+
+.amud-toggle {
+  display: flex;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.amud-toggle button {
+  padding: 7px 16px;
+  border: none;
+  background: var(--bg-paper);
+  cursor: pointer;
+  font-family: var(--font-he);
+  font-size: 1rem;
+  color: var(--text);
+  transition: all 0.2s;
+}
+
+.amud-toggle button.active {
+  background: var(--primary);
+  color: #fff;
+}
+
+.amud-toggle button:first-child {
+  border-right: 1px solid var(--border);
+}
+
+.btn {
+  padding: 7px 18px;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  font-family: var(--font-ui);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-primary {
+  background: var(--primary);
+  color: #fff;
+}
+.btn-primary:hover {
+  background: var(--primary-light);
+}
+.btn-primary:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.btn-outline {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text);
+}
+.btn-outline:hover:not(:disabled) {
+  background: var(--bg-paper);
+}
+.btn-outline:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.selector-spacer {
+  flex: 1;
+}
+
+.toggle-english {
+  font-size: 0.85rem;
+}
+
+/* ─── Gemara Viewer ─────────────────────────────────────── */
+.gemara-viewer {
+  background: var(--bg-paper);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 32px 36px;
+  position: relative;
+  /* Parchment texture via gradient */
+  background-image:
+    linear-gradient(
+      to bottom,
+      rgba(200, 180, 150, 0.04) 0%,
+      transparent 50%,
+      rgba(200, 180, 150, 0.04) 100%
+    );
+}
+
+.gemara-ref {
+  text-align: center;
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 2px solid var(--accent-light);
+}
+
+.gemara-ref-he {
+  font-family: var(--font-he);
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--primary);
+  direction: rtl;
+}
+
+.gemara-ref-en {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+.gemara-text-container {
+  direction: rtl;
+  text-align: right;
+}
+
+.gemara-segment {
+  font-family: var(--font-he);
+  font-size: 1.35rem;
+  line-height: 2.1;
+  color: var(--text);
+  margin-bottom: 10px;
+  padding: 4px 8px;
+  border-radius: 4px;
+  transition: background-color 0.2s;
+  cursor: text;
+}
+
+.gemara-segment:hover {
+  background-color: rgba(196, 162, 101, 0.06);
+}
+
+.gemara-segment b {
+  color: var(--primary);
+}
+
+.english-segment {
+  direction: ltr;
+  text-align: left;
+  font-family: var(--font-en);
+  font-size: 1rem;
+  line-height: 1.7;
+  color: var(--text-muted);
+  margin: -4px 0 14px 0;
+  padding: 6px 12px;
+  border-left: 3px solid var(--accent-light);
+  background: rgba(196, 162, 101, 0.04);
+  border-radius: 0 4px 4px 0;
+}
+
+.gemara-hint {
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  margin-top: 24px;
+  padding-top: 16px;
+  border-top: 1px solid var(--border);
+}
+
+/* ─── Floating Explain Button ───────────────────────────── */
+.explain-float-btn {
+  position: fixed;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  background: var(--primary);
+  color: #fff;
+  border: none;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-family: var(--font-ui);
+  cursor: pointer;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+  transform: translate(-50%, -100%);
+  animation: fadeInUp 0.2s ease;
+  white-space: nowrap;
+}
+
+.explain-float-btn:hover {
+  background: var(--primary-light);
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -90%);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -100%);
+  }
+}
+
+/* ─── Explanation Popup (Modal) ─────────────────────────── */
+.popup-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.popup-card {
+  background: var(--surface);
+  border-radius: 12px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  width: 100%;
+  max-width: 720px;
+  max-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  animation: slideUp 0.3s ease;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.popup-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: 20px 24px 16px;
+  border-bottom: 1px solid var(--border);
+}
+
+.popup-header-text h3 {
+  font-family: var(--font-he);
+  font-size: 1.25rem;
+  color: var(--primary);
+  direction: rtl;
+  word-break: break-word;
+}
+
+.popup-header-text .popup-ref {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+.popup-close {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: var(--text-muted);
+  padding: 0 4px;
+  line-height: 1;
+  flex-shrink: 0;
+}
+.popup-close:hover {
+  color: var(--text);
+}
+
+.popup-body {
+  padding: 20px 24px 24px;
+  overflow-y: auto;
+  flex: 1;
+}
+
+/* ─── Markdown Styles Inside Popup ──────────────────────── */
+.popup-body h2 {
+  font-size: 1.1rem;
+  color: var(--primary);
+  margin: 20px 0 8px;
+  padding-bottom: 4px;
+  border-bottom: 1px solid var(--accent-light);
+}
+.popup-body h2:first-child {
+  margin-top: 0;
+}
+
+.popup-body h3 {
+  font-size: 1rem;
+  color: var(--primary-light);
+  margin: 16px 0 6px;
+}
+
+.popup-body p {
+  margin: 8px 0;
+  line-height: 1.7;
+}
+
+.popup-body ul,
+.popup-body ol {
+  margin: 8px 0 8px 24px;
+}
+
+.popup-body li {
+  margin: 4px 0;
+  line-height: 1.6;
+}
+
+.popup-body a {
+  color: var(--primary-light);
+  text-decoration: underline;
+  text-decoration-color: var(--accent);
+  text-underline-offset: 2px;
+}
+.popup-body a:hover {
+  color: var(--accent);
+}
+
+.popup-body strong {
+  color: var(--primary);
+}
+
+.popup-body code {
+  font-family: var(--font-he);
+  background: var(--bg);
+  padding: 1px 6px;
+  border-radius: 3px;
+  font-size: 0.95em;
+}
+
+.popup-body blockquote {
+  border-right: 3px solid var(--accent);
+  padding: 4px 16px;
+  margin: 8px 0;
+  color: var(--text-muted);
+  background: var(--bg);
+  border-radius: 0 4px 4px 0;
+  direction: rtl;
+}
+
+/* ─── Loading / Error ───────────────────────────────────── */
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+  color: var(--text-muted);
+}
+
+.spinner {
+  width: 36px;
+  height: 36px;
+  border: 3px solid var(--border);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  margin-bottom: 12px;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.popup-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px 0;
+  color: var(--text-muted);
+}
+
+.popup-loading .spinner {
+  margin-bottom: 16px;
+}
+
+.popup-loading p {
+  font-size: 0.95rem;
+}
+
+.error-container {
+  text-align: center;
+  padding: 40px 20px;
+  color: #c0392b;
+}
+
+.error-container button {
+  margin-top: 12px;
+  padding: 8px 20px;
+  background: var(--primary);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.popup-error {
+  color: #c0392b;
+  padding: 20px 0;
+  text-align: center;
+}
+
+/* ─── Responsive ────────────────────────────────────────── */
+@media (max-width: 640px) {
+  .app {
+    padding: 0 12px;
+  }
+
+  .gemara-viewer {
+    padding: 20px 16px;
+  }
+
+  .gemara-segment {
+    font-size: 1.15rem;
+    line-height: 1.9;
+  }
+
+  .daf-selector {
+    padding: 10px 14px;
+    gap: 8px;
+  }
+
+  .title-he {
+    font-size: 1.8rem;
+  }
+  .title-en {
+    font-size: 1.1rem;
+  }
+
+  .popup-card {
+    max-height: 90vh;
+  }
+}
